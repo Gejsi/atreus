@@ -1,4 +1,4 @@
-module goat
+module atreus
 
 go 1.19
 

@@ -9,21 +9,21 @@ import (
 )
 
 func main() {
-	app := &cli.App {
-		Commands: []*cli.Command {
-			{
-				Name: "generate",
-				Aliases: []string{"g", "gen"},
-				Usage: "Generate some throwaway data.",
-				Action: func(ctx *cli.Context) error {
-					fmt.Println("generated data")
-					return nil
-				},
-			},
-		},
-	}
+  app := &cli.App {
+    Commands: []*cli.Command {
+      {
+        Name: "generate",
+        Aliases: []string{"g", "gen"},
+        Usage: "Generate some throwaway data.",
+        Action: func(ctx *cli.Context) error {
+          fmt.Println("generated data")
+          return nil
+        },
+      },
+    },
+  }
 
-	if err := app.Run(os.Args); err != nil {
-		log.Fatal(err)
-	}
+  if err := app.Run(os.Args); err != nil {
+    log.Fatal(err)
+  }
 }
