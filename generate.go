@@ -29,7 +29,7 @@ func generate(ctx *cli.Context) error {
 	country := fake.Address().Country()
 	city := fake.Address().City()
 	street := fake.Address().StreetAddress()
-	zip := 42000
+	zip := randomZip()
 
 	printHeading("General information")
 	printItem("First name", firstName)
