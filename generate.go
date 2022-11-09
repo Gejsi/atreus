@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"strconv"
+	"strings"
+	"time"
 
 	"github.com/fatih/color"
 	"github.com/jaswdr/faker"
@@ -19,11 +22,12 @@ func printItem(title string, text string) {
 }
 
 func generate(ctx *cli.Context) error {
+	rand.Seed(time.Now().UnixNano())
 	fake := faker.New()
 
 	firstName := fake.Person().FirstName()
 	lastName := fake.Person().LastName()
-	email := fake.Person().Contact().Email
+	email := randomEmail(&firstName)
 	phone := fake.Person().Contact().Phone
 	password := fake.Internet().Password()
 	country := fake.Address().Country()
@@ -39,7 +43,7 @@ func generate(ctx *cli.Context) error {
 	printItem("Phone", "\t"+phone)
 	printItem("Country", country)
 	printItem("City", "\t"+city)
-	printItem("Street", street)
+	printItem("Street", strings.TrimPrefix(street, "%"))
 	printItem("ZIP code", strconv.Itoa(zip))
 
 	return nil
