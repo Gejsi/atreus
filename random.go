@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"math"
 	"math/rand"
 	"strconv"
 	"strings"
@@ -14,8 +16,119 @@ func randomZip() int {
 }
 
 func randomEmail(firstName *string) string {
-	ext := []string{"com", "net", "org"}
+	domains := []string{"com", "net", "org"}
 	name := *firstName + strconv.Itoa(rand.Intn(300))
 
-	return strings.ToLower(name) + "@1secmail." + ext[rand.Intn(len(ext))]
+	return strings.ToLower(name) + "@1secmail." + domains[rand.Intn(len(domains))]
+}
+
+var visaPrefixArr = &[]string{
+	"4539",
+	"4556",
+	"4916",
+	"4532",
+	"4929",
+	"40240071",
+	"4485",
+	"4716",
+	"4",
+}
+
+var mastercardPrefixArr = &[]string{
+	"51",
+	"52",
+	"53",
+	"54",
+	"55",
+	"2221",
+	"2222",
+	"2223",
+	"2224",
+	"2225",
+	"2226",
+	"2227",
+	"2228",
+	"2229",
+	"223",
+	"224",
+	"225",
+	"226",
+	"227",
+	"228",
+	"229",
+	"23",
+	"24",
+	"25",
+	"26",
+	"270",
+	"271",
+	"2720",
+}
+
+var discoverPrefixArr = &[]string{"6011"}
+
+var dinersPrefixArr = &[]string{
+	"300",
+	"301",
+	"302",
+	"303",
+	"36",
+	"38",
+}
+
+var enRoutePrefixArr = &[]string{"2014", "2149"}
+
+var jcbPrefixArr = &[]string{"35"}
+
+func reverse(arr *[]int) []int {
+	for i, j := 0, len(*arr)-1; i < j; i, j = i+1, j-1 {
+		(*arr)[i], (*arr)[j] = (*arr)[j], (*arr)[i]
+	}
+
+	return *arr
+}
+
+// TODO: currently only VISA, Discover and JCB cards work, fix other ones
+func calculateNumber(prefix *string) string {
+	cardNumber := make([]int, len(*prefix))
+	const length int = 16
+
+	for i, char := range *prefix {
+		cardNumber[i] = int(char - '0')
+	}
+
+	for len(cardNumber) < (length - 1) {
+		cardNumber = append(cardNumber, rand.Intn(10))
+	}
+
+	cardNumber = reverse(&cardNumber)
+
+	var sum int
+
+	for i := 0; i < length-1; i += 2 {
+		odd := cardNumber[i] * 2
+
+		if odd > 9 {
+			odd -= 9
+		}
+
+		sum += odd
+
+		if i != length-2 {
+			sum += cardNumber[i+1]
+		}
+	}
+
+	checkDigit := ((int(math.Floor(float64(sum)/10))+1)*10 - sum) % 10
+	cardNumber = reverse(&cardNumber)
+	cardNumber = append(cardNumber, checkDigit)
+
+	// one-liner that converts []int to string (without a delimiter)
+	res := strings.Trim(strings.Join(strings.Split(fmt.Sprint(cardNumber), " "), ""), "[]")
+
+	return res
+}
+
+func randomCardNumber(prefixArr *[]string) string {
+	return calculateNumber(&(*prefixArr)[rand.Intn(len((*prefixArr)))])
 }

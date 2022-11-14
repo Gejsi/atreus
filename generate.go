@@ -13,7 +13,7 @@ import (
 )
 
 func printHeading(text string) {
-	color.New(color.Italic, color.Bold, color.FgMagenta).Printf("--------%s--------\n", text)
+	color.New(color.Italic, color.Bold, color.FgMagenta).Printf("%s\n", text)
 }
 
 func printItem(title string, text string) {
@@ -34,17 +34,25 @@ func generate(ctx *cli.Context) error {
 	city := fake.Address().City()
 	street := fake.Address().StreetAddress()
 	zip := randomZip()
+	cardNumber := randomCardNumber(jcbPrefixArr)
+	endDate := faker.New().Payment().CreditCardExpirationDateString()
 
-	printHeading("General information")
+	printHeading("--------General information--------")
 	printItem("First name", firstName)
 	printItem("Last name", lastName)
 	printItem("Email", "\t"+email)
 	printItem("Password", password)
 	printItem("Phone", "\t"+phone)
+	printHeading("------------Address----------------")
 	printItem("Country", country)
 	printItem("City", "\t"+city)
 	printItem("Street", strings.TrimPrefix(street, "%"))
 	printItem("ZIP code", strconv.Itoa(zip))
+	printHeading("--------Credit/Debit card----------")
+	printItem("Card number", cardNumber)
+	printItem("End date", endDate)
+	printItem("CVV", "\t"+endDate)
+	printItem("Card type", endDate)
 
 	return nil
 }
