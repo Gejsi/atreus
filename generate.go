@@ -36,6 +36,7 @@ func generate(ctx *cli.Context) error {
 	zip := randomZip()
 	cardNumber, cardIssuer := randomCardNumber()
 	endDate := faker.New().Payment().CreditCardExpirationDateString()
+	cvv := randomCVV()
 
 	printHeading("--------General information--------")
 	printItem("First name", firstName)
@@ -51,7 +52,7 @@ func generate(ctx *cli.Context) error {
 	printHeading("--------Credit/Debit card----------")
 	printItem("Card number", cardNumber)
 	printItem("End date", endDate)
-	printItem("CVV", "\t"+endDate)
+	printItem("CVV", "\t"+strconv.Itoa(cvv))
 	printItem("Card type", cardIssuer)
 
 	return nil

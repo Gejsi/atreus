@@ -8,11 +8,12 @@ import (
 	"strings"
 )
 
-func randomZip() int {
-	min := 10000
-	max := 99999
-
+func randomInRange(min int, max int) int {
 	return rand.Intn(max-min) + min
+}
+
+func randomZip() int {
+	return randomInRange(10000, 99999)
 }
 
 func randomEmail(firstName *string) string {
@@ -98,14 +99,21 @@ var cardIssuers []string = []string{"Visa", "MasterCard", "Discover", "JCB"}
 
 func randomCardNumber() (string, string) {
 	issuer := cardIssuers[rand.Intn(len(cardIssuers))]
+	var cardNumber string
 
 	if issuer == "MasterCard" {
-		return calculateNumber(&(*mastercardPrefixArr)[rand.Intn(len((*mastercardPrefixArr)))]), issuer
+		cardNumber = calculateNumber(&(*mastercardPrefixArr)[rand.Intn(len((*mastercardPrefixArr)))])
 	} else if issuer == "Discover" {
-		return calculateNumber(&(*discoverPrefixArr)[rand.Intn(len((*discoverPrefixArr)))]), issuer
+		cardNumber = calculateNumber(&(*discoverPrefixArr)[rand.Intn(len((*discoverPrefixArr)))])
 	} else if issuer == "JCB" {
-		return calculateNumber(&(*jcbPrefixArr)[rand.Intn(len((*jcbPrefixArr)))]), issuer
+		cardNumber = calculateNumber(&(*jcbPrefixArr)[rand.Intn(len((*jcbPrefixArr)))])
+	} else {
+		cardNumber = calculateNumber(&(*visaPrefixArr)[rand.Intn(len((*visaPrefixArr)))])
 	}
 
-	return calculateNumber(&(*visaPrefixArr)[rand.Intn(len((*visaPrefixArr)))]), "Visa"
+	return cardNumber, issuer
+}
+
+func randomCVV() int {
+	return randomInRange(100, 999)
 }
