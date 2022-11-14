@@ -94,6 +94,18 @@ func calculateNumber(prefix *string) string {
 	return res
 }
 
-func randomCardNumber(prefixArr *[]string) string {
-	return calculateNumber(&(*prefixArr)[rand.Intn(len((*prefixArr)))])
+var cardIssuers []string = []string{"Visa", "MasterCard", "Discover", "JCB"}
+
+func randomCardNumber() (string, string) {
+	issuer := cardIssuers[rand.Intn(len(cardIssuers))]
+
+	if issuer == "MasterCard" {
+		return calculateNumber(&(*mastercardPrefixArr)[rand.Intn(len((*mastercardPrefixArr)))]), issuer
+	} else if issuer == "Discover" {
+		return calculateNumber(&(*discoverPrefixArr)[rand.Intn(len((*discoverPrefixArr)))]), issuer
+	} else if issuer == "JCB" {
+		return calculateNumber(&(*jcbPrefixArr)[rand.Intn(len((*jcbPrefixArr)))]), issuer
+	}
+
+	return calculateNumber(&(*visaPrefixArr)[rand.Intn(len((*visaPrefixArr)))]), "Visa"
 }
