@@ -34,7 +34,7 @@ func generate(ctx *cli.Context) error {
 	city := fake.Address().City()
 	street := fake.Address().StreetAddress()
 	zip := randomZip()
-	cardNumber := randomCardNumber(jcbPrefixArr)
+	cardNumber := randomCardNumber(mastercardPrefixArr)
 	endDate := faker.New().Payment().CreditCardExpirationDateString()
 
 	printHeading("--------General information--------")

@@ -40,43 +40,9 @@ var mastercardPrefixArr = &[]string{
 	"53",
 	"54",
 	"55",
-	"2221",
-	"2222",
-	"2223",
-	"2224",
-	"2225",
-	"2226",
-	"2227",
-	"2228",
-	"2229",
-	"223",
-	"224",
-	"225",
-	"226",
-	"227",
-	"228",
-	"229",
-	"23",
-	"24",
-	"25",
-	"26",
-	"270",
-	"271",
-	"2720",
 }
 
 var discoverPrefixArr = &[]string{"6011"}
-
-var dinersPrefixArr = &[]string{
-	"300",
-	"301",
-	"302",
-	"303",
-	"36",
-	"38",
-}
-
-var enRoutePrefixArr = &[]string{"2014", "2149"}
 
 var jcbPrefixArr = &[]string{"35"}
 
@@ -88,7 +54,6 @@ func reverse(arr *[]int) []int {
 	return *arr
 }
 
-// TODO: currently only VISA, Discover and JCB cards work, fix other ones
 func calculateNumber(prefix *string) string {
 	cardNumber := make([]int, len(*prefix))
 	const length int = 16
