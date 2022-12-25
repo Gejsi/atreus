@@ -23,9 +23,10 @@ func main() {
 				Aliases: []string{"l"},
 				Usage:   "Shows a list of messages sent to your temporary email",
 				Action:  list,
-				Flags: []cli.Flag{
-					&cli.StringFlag{Name: "email", Aliases: []string{"e"}},
-				},
+				// TODO: add --recent and --id flags
+				// Flags: []cli.Flag{
+				// 	&cli.StringFlag{Name: "email", Aliases: []string{"e"}},
+				// },
 			},
 		},
 	}

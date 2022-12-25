@@ -23,7 +23,7 @@ type Email struct {
 }
 
 func list(ctx *cli.Context) error {
-	emailArg, err := mail.ParseAddress(ctx.String("email"))
+	emailArg, err := mail.ParseAddress(ctx.Args().First())
 	if err != nil {
 		return cli.Exit("Please, provide a valid email.", 1)
 	}
