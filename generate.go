@@ -7,17 +7,17 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fatih/color"
 	"github.com/jaswdr/faker"
+	"github.com/jwalton/gchalk"
 	"github.com/urfave/cli/v2"
 )
 
 func printHeading(text string) {
-	color.New(color.Italic, color.Bold, color.FgMagenta).Printf("%s\n", text)
+	fmt.Println(gchalk.WithItalic().WithMagenta().Bold(text))
 }
 
 func printItem(title string, text string) {
-	color.New(color.Bold).Printf("%s: \t", title)
+	fmt.Printf(gchalk.Bold("%s: \t"), title)
 	fmt.Println(text)
 }
 
@@ -49,7 +49,7 @@ func generate(ctx *cli.Context) error {
 	printItem("City", "\t"+city)
 	printItem("Street", strings.TrimPrefix(street, "%"))
 	printItem("ZIP code", strconv.Itoa(zip))
-	printHeading("--------Credit/Debit card----------")
+	printHeading("-----------Credit card-------------")
 	printItem("Card number", cardNumber)
 	printItem("End date", endDate)
 	printItem("CVV", "\t"+strconv.Itoa(cvv))

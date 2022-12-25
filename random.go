@@ -47,6 +47,8 @@ var discoverPrefixArr = &[]string{"6011"}
 
 var jcbPrefixArr = &[]string{"35"}
 
+var cardIssuers = &[4]string{"Visa", "MasterCard", "Discover", "JCB"}
+
 func reverse(arr *[]int) []int {
 	for i, j := 0, len(*arr)-1; i < j; i, j = i+1, j-1 {
 		(*arr)[i], (*arr)[j] = (*arr)[j], (*arr)[i]
@@ -55,7 +57,7 @@ func reverse(arr *[]int) []int {
 	return *arr
 }
 
-func calculateNumber(prefix *string) string {
+func calculateCardNumber(prefix *string) string {
 	cardNumber := make([]int, len(*prefix))
 	const length int = 16
 
@@ -95,20 +97,18 @@ func calculateNumber(prefix *string) string {
 	return res
 }
 
-var cardIssuers []string = []string{"Visa", "MasterCard", "Discover", "JCB"}
-
 func randomCardNumber() (string, string) {
 	issuer := cardIssuers[rand.Intn(len(cardIssuers))]
 	var cardNumber string
 
 	if issuer == "MasterCard" {
-		cardNumber = calculateNumber(&(*mastercardPrefixArr)[rand.Intn(len((*mastercardPrefixArr)))])
+		cardNumber = calculateCardNumber(&(*mastercardPrefixArr)[rand.Intn(len((*mastercardPrefixArr)))])
 	} else if issuer == "Discover" {
-		cardNumber = calculateNumber(&(*discoverPrefixArr)[rand.Intn(len((*discoverPrefixArr)))])
+		cardNumber = calculateCardNumber(&(*discoverPrefixArr)[rand.Intn(len((*discoverPrefixArr)))])
 	} else if issuer == "JCB" {
-		cardNumber = calculateNumber(&(*jcbPrefixArr)[rand.Intn(len((*jcbPrefixArr)))])
+		cardNumber = calculateCardNumber(&(*jcbPrefixArr)[rand.Intn(len((*jcbPrefixArr)))])
 	} else {
-		cardNumber = calculateNumber(&(*visaPrefixArr)[rand.Intn(len((*visaPrefixArr)))])
+		cardNumber = calculateCardNumber(&(*visaPrefixArr)[rand.Intn(len((*visaPrefixArr)))])
 	}
 
 	return cardNumber, issuer
